@@ -7,7 +7,6 @@ package com;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.*;
 
@@ -52,19 +51,16 @@ public class ProcessSimulator {
 	frame.setSize(800, 600);
 	frame.setVisible(true);
 	
-	btnAddProcess.addActionListener(new ActionListener() {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			if (!"".equals(txtProcess.getText()) && !"".equals(txtBurstTime.getText())) {
-				processArray.add(txtProcess.getText());
-				burstTimeArray.add(txtBurstTime.getText());
-				txtProcess.setText("");
-				txtBurstTime.setText("");
-				System.out.println(processArray + " --- " + burstTimeArray);
-			}
-			else {
-				JOptionPane.showMessageDialog(null, "Verifica que los datos del proceso a agregar esten completos");
-			}
+	btnAddProcess.addActionListener((ActionEvent e) -> {
+		if (!"".equals(txtProcess.getText()) && !"".equals(txtBurstTime.getText())) {
+			processArray.add(txtProcess.getText());
+			burstTimeArray.add(txtBurstTime.getText());
+			txtProcess.setText("");
+			txtBurstTime.setText("");
+			System.out.println(processArray + " --- " + burstTimeArray);
+		}
+		else {
+			JOptionPane.showMessageDialog(null, "Verifica que los datos del proceso a agregar esten completos");
 		}
 	});
     }
