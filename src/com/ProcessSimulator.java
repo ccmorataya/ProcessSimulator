@@ -55,11 +55,16 @@ public class ProcessSimulator {
 	btnAddProcess.addActionListener(new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			processArray.add(txtProcess.getText());
-			burstTimeArray.add(txtBurstTime.getText());
-			txtProcess.setText("");
-			txtBurstTime.setText("");
-			System.out.println(processArray + " --- " + burstTimeArray);
+			if (!"".equals(txtProcess.getText()) && !"".equals(txtBurstTime.getText())) {
+				processArray.add(txtProcess.getText());
+				burstTimeArray.add(txtBurstTime.getText());
+				txtProcess.setText("");
+				txtBurstTime.setText("");
+				System.out.println(processArray + " --- " + burstTimeArray);
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "Verifica que los datos del proceso a agregar esten completos");
+			}
 		}
 	});
     }
