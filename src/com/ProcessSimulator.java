@@ -32,6 +32,9 @@ public class ProcessSimulator {
 	JTextField txtBurstTime = new JTextField("Burst Time:");
 	JButton btnAddProcess = new JButton("Agregar");
 	
+	JTextField txtQuantum = new JTextField("Quantum:");
+	JButton btnProcess = new JButton("Procesar");
+	
 	JFrame frame = new JFrame("My frame");
 	frame.setDefaultCloseOperation(3);
 	frame.setLayout(gdLayout);
@@ -42,10 +45,10 @@ public class ProcessSimulator {
 	frame.add(txtBurstTime);
 	frame.add(btnAddProcess);
 	frame.add(new JLabel(""));
+	frame.add(txtQuantum);
 	frame.add(new JLabel(""));
 	frame.add(new JLabel(""));
-	frame.add(new JLabel(""));
-	frame.add(new JLabel(""));
+	frame.add(btnProcess);
 	frame.setSize(800, 600);
 	frame.setVisible(true);
 	
@@ -56,7 +59,7 @@ public class ProcessSimulator {
 			burstTimeArray.add(txtBurstTime.getText());
 			txtProcess.setText("");
 			txtBurstTime.setText("");
-			System.out.println(processArray + " " + burstTimeArray);
+			System.out.println(processArray + " --- " + burstTimeArray);
 		}
 	});
     }
