@@ -3,9 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="64446845-7254-4572-be2a-f0b233477f7b" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ProcessSimulator/com/ProcessSimulator.class" afterPath="$PROJECT_DIR$/out/production/ProcessSimulator/com/ProcessSimulator.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ProcessSimulator.iml" afterPath="$PROJECT_DIR$/ProcessSimulator.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/ProcessSimulator.java" afterPath="$PROJECT_DIR$/src/com/ProcessSimulator.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -241,12 +238,12 @@
       <updated>1525812106752</updated>
       <workItem from="1525812113536" duration="240000" />
       <workItem from="1525873995664" duration="1901000" />
-      <workItem from="1525880492554" duration="6604000" />
+      <workItem from="1525880492554" duration="6605000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="8745000" />
+    <option name="totallyTimeSpent" value="8746000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1920" y="0" width="1920" height="1080" extended-state="0" />
