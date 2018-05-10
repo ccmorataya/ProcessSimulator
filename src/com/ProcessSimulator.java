@@ -18,19 +18,20 @@ import javax.swing.*;
  * @author ccmorataya
  */
 public class ProcessSimulator {
-    private static HashMap<String, Integer> hmProcess = new HashMap<>();
+    private static HashMap<String, ArrayList<Integer>> hmProcess = new HashMap<>();
     /**
      * @param args the command line arguments
      */
 	public static void main(String[] args) {
 
-		GridLayout gdLayout = new GridLayout(4, 3, 10, 10);
+		GridLayout gdLayout = new GridLayout(4, 4, 10, 10);
 
 		String[] algorithmsString = {"SJF", "PBS", "RR"};
 		JComboBox algorithmsList = new JComboBox(algorithmsString);
 
 		JTextField txtProcess = new JTextField("");
 		JTextField txtBurstTime = new JTextField("");
+		JTextField txtArrivalTime = new JTextField("");
 		JButton btnAddProcess = new JButton("Agregar");
 
 		JTextField txtQuantum = new JTextField("");
@@ -39,43 +40,51 @@ public class ProcessSimulator {
 		JFrame frame = new JFrame("Process simulator");
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.setLayout(gdLayout);
-		frame.add(new JLabel(""));
-		frame.add(algorithmsList);
-		frame.add(new JLabel(""));
-		frame.add(txtProcess);
-		frame.add(txtBurstTime);
-		frame.add(btnAddProcess);
-		frame.add(new JLabel(""));
-		frame.add(txtQuantum);
+		frame.add(new JLabel(""));	// 0,0
+		frame.add(algorithmsList);		// 0,1
+		frame.add(new JLabel(""));	// 0,2
+		frame.add(new JLabel(""));	// 0,3
+		frame.add(txtProcess);			// 1,0
+		frame.add(txtBurstTime);		// 1,1
+		frame.add(txtArrivalTime);		// 1,2
+		frame.add(btnAddProcess);		// 1,3
+		frame.add(new JLabel(""));	// 2,0
+		frame.add(txtQuantum);			// 2,1
 		txtQuantum.setVisible(false);
-		frame.add(new JLabel(""));
-		frame.add(new JLabel(""));
-		frame.add(btnProcess);
+		frame.add(new JLabel(""));	// 2,2
+		frame.add(new JLabel(""));	// 2,3
+		frame.add(new JLabel(""));	// 3,0
+		frame.add(btnProcess);			// 3,1
 		frame.setSize(800, 600);
 		frame.setVisible(true);
 
 		new PlaceHolder(txtProcess, "Proceso:");
 		new PlaceHolder(txtBurstTime, "Ráfaga:");
 		new PlaceHolder(txtQuantum, "Quantum:");
+		new PlaceHolder(txtArrivalTime, "Tiempo de llegada:");
 
-		algorithmsList.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (algorithmsList.getSelectedItem() != "RR")
-					txtQuantum.setVisible(false);
-				else
-					txtQuantum.setVisible(true);
-			}
+		algorithmsList.addActionListener(e -> {
+			if (algorithmsList.getSelectedItem() != "RR")
+				txtQuantum.setVisible(false);
+			else
+				txtQuantum.setVisible(true);
 		});
 
 		btnAddProcess.addActionListener((ActionEvent ev) -> {
-			if (!"".equals(txtProcess.getText()) && !"".equals(txtBurstTime.getText())) {
+			if (!"".equals(txtProcess.getText()) && !"".equals(txtBurstTime.getText()) && !"".equals(txtArrivalTime.getText())) {
 				try {
 				    algorithmsList.setEnabled(false);
-					hmProcess.put(txtProcess.getText(), Integer.parseInt(txtBurstTime.getText()));
-					txtProcess.setText("");
-					txtBurstTime.setText("");
-					hmProcess.forEach((k, v) -> System.out.println("Item: " + k + "\tValue:" + v));
+				    ArrayList<Integer> temp = new ArrayList<>();
+				    temp.add(Integer.parseInt(txtBurstTime.getText()));
+					temp.add(Integer.parseInt(txtArrivalTime.getText()));
+					hmProcess.put(txtProcess.getText(), temp);
+					txtProcess.setText(null);
+					txtBurstTime.setText(null);
+					txtArrivalTime.setText(null);
+					new PlaceHolder(txtProcess, "Proceso:");
+					new PlaceHolder(txtBurstTime, "Ráfaga:");
+					new PlaceHolder(txtQuantum, "Quantum:");
+					new PlaceHolder(txtArrivalTime, "Tiempo de llegada:");
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(null, "Verifica que los datos del proceso a agregar esten completos");
 				}
@@ -84,7 +93,7 @@ public class ProcessSimulator {
 		});
 
 		btnProcess.addActionListener((ActionEvent ev) -> {
-			System.out.printf("Event: %s", ev);
+			hmProcess.forEach((k, v) -> System.out.println("Item: " + k + "\tValue:" + v));
 			algorithmsList.setEnabled(true);
 		});
 	}
