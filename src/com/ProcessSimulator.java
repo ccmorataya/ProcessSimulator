@@ -7,7 +7,7 @@ package com;
 
 import com.placeholder.PlaceHolder;
 
-import java.awt.GridLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ public class ProcessSimulator {
      */
 	public static void main(String[] args) {
 
-		GridLayout gdLayout = new GridLayout(4, 4, 10, 10);
+//		GridLayout gdLayout = new GridLayout(4, 4, 10, 10);
 
 		String[] algorithmsString = {"SJF", "PBS", "RR"};
 		JComboBox algorithmsList = new JComboBox(algorithmsString);
@@ -38,24 +38,67 @@ public class ProcessSimulator {
 		JButton btnProcess = new JButton("Procesar");
 
 		JFrame frame = new JFrame("Process simulator");
+		JPanel leftPanel = new JPanel();
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		frame.setLayout(gdLayout);
-		frame.add(new JLabel(""));	// 0,0
-		frame.add(algorithmsList);		// 0,1
-		frame.add(new JLabel(""));	// 0,2
-		frame.add(new JLabel(""));	// 0,3
-		frame.add(txtProcess);			// 1,0
-		frame.add(txtBurstTime);		// 1,1
-		frame.add(txtArrivalTime);		// 1,2
-		frame.add(btnAddProcess);		// 1,3
-		frame.add(new JLabel(""));	// 2,0
-		frame.add(txtQuantum);			// 2,1
-		txtQuantum.setVisible(false);
-		frame.add(new JLabel(""));	// 2,2
-		frame.add(new JLabel(""));	// 2,3
-		frame.add(new JLabel(""));	// 3,0
-		frame.add(btnProcess);			// 3,1
-		frame.setSize(800, 600);
+		frame.setLayout(new GridBagLayout());
+		leftPanel.setLayout(new GridBagLayout());
+
+		GridBagConstraints constraints = new GridBagConstraints();
+
+		constraints.gridy = 0;
+		constraints.gridx = 0;
+		constraints.gridwidth = 4;
+		constraints.gridheight = 1;
+		constraints.fill = GridBagConstraints.HORIZONTAL;
+		constraints.weighty = 1.0;
+		leftPanel.add(algorithmsList, constraints);
+		constraints.weighty = 0.0;
+
+		constraints.gridy = 1;
+		constraints.gridx = 0;
+		constraints.gridwidth = 1;
+		constraints.gridheight = 1;
+		constraints.fill = GridBagConstraints.BOTH;
+		leftPanel.add(txtProcess, constraints);
+
+		constraints.gridy = 1;
+		constraints.gridx = 1;
+		constraints.gridwidth = 1;
+		constraints.gridheight = 1;
+		constraints.fill = GridBagConstraints.BOTH;
+		leftPanel.add(txtBurstTime, constraints);
+
+		constraints.gridy = 1;
+		constraints.gridx = 2;
+		constraints.gridwidth = 1;
+		constraints.gridheight = 1;
+		constraints.fill = GridBagConstraints.BOTH;
+		leftPanel.add(txtArrivalTime, constraints);
+
+		constraints.gridy = 1;
+		constraints.gridx = 3;
+		constraints.gridwidth = 1;
+		constraints.gridheight = 1;
+		constraints.fill = GridBagConstraints.BOTH;
+		leftPanel.add(btnAddProcess, constraints);
+
+		constraints.gridy = 2;
+		constraints.gridx = 1;
+		constraints.gridwidth = 1;
+		constraints.gridheight = 1;
+		constraints.fill = GridBagConstraints.BOTH;
+		leftPanel.add(txtQuantum, constraints);
+
+		constraints.gridy = 3;
+		constraints.gridx = 1;
+		constraints.gridwidth = 1;
+		constraints.gridheight = 1;
+		constraints.fill = GridBagConstraints.BOTH;
+		leftPanel.add(btnProcess, constraints);
+
+		txtQuantum.setEnabled(false);
+        frame.add(leftPanel);
+		frame.setSize(800, 200);
 		frame.setVisible(true);
 
 		new PlaceHolder(txtProcess, "Proceso:");
@@ -65,9 +108,9 @@ public class ProcessSimulator {
 
 		algorithmsList.addActionListener(e -> {
 			if (algorithmsList.getSelectedItem() != "RR")
-				txtQuantum.setVisible(false);
+				txtQuantum.setEnabled(false);
 			else
-				txtQuantum.setVisible(true);
+				txtQuantum.setEnabled(true);
 		});
 
 		btnAddProcess.addActionListener((ActionEvent ev) -> {
@@ -93,7 +136,11 @@ public class ProcessSimulator {
 		});
 
 		btnProcess.addActionListener((ActionEvent ev) -> {
-			hmProcess.forEach((k, v) -> System.out.println("Item: " + k + "\tValue:" + v));
+			if (hmProcess.size() > 0)
+				hmProcess.forEach((k, v) -> System.out.println("Item: " + k + "\tValue:" + v));
+			else
+				JOptionPane.showMessageDialog(null, "No hay datos para procesar");
+
 			algorithmsList.setEnabled(true);
 		});
 	}
