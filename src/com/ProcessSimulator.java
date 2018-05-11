@@ -45,7 +45,7 @@ public class ProcessSimulator {
 		frame.setLayout(new GridBagLayout());
 		leftPanel.setLayout(new GridBagLayout());
 
-		JTextArea txtArea = new JTextArea("", 6, 20);
+		JTextArea txtArea = new JTextArea("", 6, 30);
 		rightPanel.setLayout(new GridBagLayout());
 
 		GridBagConstraints constraints = new GridBagConstraints();
@@ -61,8 +61,8 @@ public class ProcessSimulator {
 		constraints.weighty = 0.0;
 
 		constraints.gridy = 1;
-		constraints.gridx = 1;
-		constraints.gridwidth = 2;
+		constraints.gridx = 0;
+		constraints.gridwidth = 3;
 		constraints.gridheight = 1;
 		constraints.fill = GridBagConstraints.BOTH;
 		leftPanel.add(txtQuantum, constraints);
@@ -123,7 +123,16 @@ public class ProcessSimulator {
 		constraints.gridwidth = 1;
 		constraints.gridheight = 1;
 		constraints.fill = GridBagConstraints.BOTH;
+		rightPanel.add(new JLabel("Tabla de procesos", SwingConstants.CENTER), constraints);
+
+		constraints.gridy = 1;
+		constraints.gridx = 0;
+		constraints.gridwidth = 1;
+		constraints.gridheight = 1;
+		constraints.fill = GridBagConstraints.BOTH;
 		rightPanel.add(new JScrollPane(txtArea), constraints);
+		txtArea.append("Proceso\tRáfaga\tLlegada\n");
+		txtArea.append("---------------------------------------------------------\n");
 		// CM: End of rightPanel
 
 		// CM: JFrame
@@ -180,14 +189,17 @@ public class ProcessSimulator {
 				    temp.add(Integer.parseInt(txtBurstTime.getText()));
 					temp.add(Integer.parseInt(txtArrivalTime.getText()));
 					hmProcess.put(txtProcess.getText(), temp);
+					txtArea.append("   " + txtProcess.getText() + "\t   " + txtBurstTime.getText() + "\t   " + txtArrivalTime.getText() + "\n");
 					txtProcess.setText(null);
 					txtBurstTime.setText(null);
 					txtArrivalTime.setText(null);
-					txtArea.setText(null);
 					new PlaceHolder(txtProcess, "Proceso:");
 					new PlaceHolder(txtBurstTime, "Ráfaga:");
 					new PlaceHolder(txtQuantum, "Quantum:");
 					new PlaceHolder(txtArrivalTime, "Tiempo de llegada:");
+//					hmProcess.forEach((k, v) ->
+//					txtArea.append("   " + k + "\t   " + v.get(0) + "\t   " + v.get(1) + "\n")
+//					);
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(null, "Verifica que los datos del proceso a agregar esten completos");
 				}
@@ -196,11 +208,10 @@ public class ProcessSimulator {
 		});
 
 		btnProcess.addActionListener((ActionEvent ev) -> {
-			if (hmProcess.size() > 0)
-				hmProcess.forEach((k, v) -> //System.out.println("Item: " + k + "\tValue:" + v);
-						// TODO-CM:: replace txtArea with jTable
-					txtArea.append(k + " " + v + "\n")
-				);
+			if (hmProcess.size() > 0) {
+				// Process the selected algorithm
+				String result = new Sjf().process(hmProcess);
+			}
 			else
 				JOptionPane.showMessageDialog(null, "No hay datos para procesar");
 
