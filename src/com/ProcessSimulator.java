@@ -46,6 +46,7 @@ public class ProcessSimulator {
 		leftPanel.setLayout(new GridBagLayout());
 
 		JTextArea txtArea = new JTextArea("", 6, 30);
+		JTextArea txtResponse = new JTextArea("", 6, 30);
 		rightPanel.setLayout(new GridBagLayout());
 
 		GridBagConstraints constraints = new GridBagConstraints();
@@ -133,6 +134,22 @@ public class ProcessSimulator {
 		rightPanel.add(new JScrollPane(txtArea), constraints);
 		txtArea.append("Proceso\tRáfaga\tLlegada\n");
 		txtArea.append("---------------------------------------------------------\n");
+
+		constraints.gridy = 0;
+		constraints.gridx = 1;
+		constraints.gridwidth = 1;
+		constraints.gridheight = 1;
+		constraints.fill = GridBagConstraints.BOTH;
+		rightPanel.add(new JLabel("Tabla de resultados", SwingConstants.CENTER), constraints);
+
+		constraints.gridy = 1;
+		constraints.gridx = 1;
+		constraints.gridwidth = 1;
+		constraints.gridheight = 1;
+		constraints.fill = GridBagConstraints.BOTH;
+		rightPanel.add(new JScrollPane(txtResponse), constraints);
+		txtResponse.append("Proceso\tEntrega\tRespuesta\tEspera\n");
+		txtResponse.append("-----------------------------------------------------------------------------\n");
 		// CM: End of rightPanel
 
 		// CM: JFrame
@@ -157,7 +174,7 @@ public class ProcessSimulator {
 
 		txtQuantum.setEnabled(false);
 		btnSetQuantum.setEnabled(false);
-		frame.setSize(800, 200);
+		frame.setSize(1200, 200);
 		frame.setVisible(true);
 		txtArea.setVisible(true);
 
@@ -210,7 +227,7 @@ public class ProcessSimulator {
 		btnProcess.addActionListener((ActionEvent ev) -> {
 			if (hmProcess.size() > 0) {
 				// Process the selected algorithm
-				String result = new Sjf().process(hmProcess);
+				String result = new Sjf().process(hmProcess, txtResponse);
 			}
 			else
 				JOptionPane.showMessageDialog(null, "No hay datos para procesar");
@@ -220,7 +237,12 @@ public class ProcessSimulator {
 
 		btnReset.addActionListener( (ActionEvent ev) -> {
 		    hmProcess = new HashMap<>();
-			System.out.printf("Reset all\n");
+		    txtArea.setText(null);
+		    txtResponse.setText(null);
+			txtArea.append("Proceso\tRáfaga\tLlegada\n");
+			txtArea.append("---------------------------------------------------------\n");
+			txtResponse.append("Proceso\tEntrega\tRespuesta\tEspera\n");
+			txtResponse.append("---------------------------------------------------------\n");
 		});
 	}
 

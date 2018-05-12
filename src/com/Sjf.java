@@ -1,10 +1,11 @@
 package com;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 class Sjf {
-    String process(HashMap<String, ArrayList<Integer>> hashMap){
+    String process(HashMap<String, ArrayList<Integer>> hashMap, JTextArea resultTxtArea){
         int noProcesses = hashMap.size();
         int processes[] = new int[noProcesses];
         int burstTime[] = new int[noProcesses];
@@ -21,11 +22,9 @@ class Sjf {
         for (i=0;i<noProcesses;i++)
         {
             processes[i]= i+1;
-            //System.out.println ("enter process " +(i+1)+ " arrival time:");
             String pid = "P" + (i+1);
             burstTime[i]= hashMap.get(pid).get(0);
             arrivalTime[i]= hashMap.get(pid).get(1);
-//            System.out.println("enter process " +(i+1)+ " burst time:");
             kBurstTime[i]= burstTime[i];
             flag[i]= 0;
         }
@@ -67,14 +66,12 @@ class Sjf {
             avgta+= responseTime[i];
         }
 
-        System.out.println("pid  arrival  burst  complete turn waiting");
         for(i=0;i<noProcesses;i++)
         {
-            System.out.println(processes[i] +"\t"+ arrivalTime[i]+"\t"+ kBurstTime[i] +"\t"+ deliveryTime[i] +"\t"+ responseTime[i] +"\t"+ waitingTime[i]);
+            resultTxtArea.append("P" + processes[i] + "\t" + deliveryTime[i] + "\t" + responseTime[i] + "\t" + waitingTime[i] + "\n");
         }
 
-        System.out.println("\naverage tat is "+ avgta/noProcesses);
-        System.out.println("average wt is "+ avgwt/noProcesses);
+        resultTxtArea.append("\nPromedio de espera es: " + avgwt/noProcesses);
 
         return "ret";
     }
