@@ -45,8 +45,8 @@ public class ProcessSimulator {
 		frame.setLayout(new GridBagLayout());
 		leftPanel.setLayout(new GridBagLayout());
 
-		JTextArea txtArea = new JTextArea("", 6, 30);
-		JTextArea txtResponse = new JTextArea("", 6, 30);
+		JTextArea txtArea = new JTextArea("", 10, 30);
+		JTextArea txtResponse = new JTextArea("", 10, 30);
 		rightPanel.setLayout(new GridBagLayout());
 
 		GridBagConstraints constraints = new GridBagConstraints();
@@ -240,7 +240,7 @@ public class ProcessSimulator {
 			txtArea.append("Proceso\tRáfaga\tLlegada\n");
 			txtArea.append("---------------------------------------------------------\n");
 			txtResponse.append("Proceso\tEntrega\tRespuesta\tEspera\n");
-			txtResponse.append("---------------------------------------------------------\n");
+			txtResponse.append("-----------------------------------------------------------------------------\n");
 		});
 	}
 

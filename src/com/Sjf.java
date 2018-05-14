@@ -10,13 +10,16 @@ class Sjf {
         int processes[] = new int[noProcesses];
         int burstTime[] = new int[noProcesses];
         int arrivalTime[] = new int[noProcesses];
-        int responseTime[] = new int[noProcesses];
+        int returnTime[] = new int[noProcesses];
         int deliveryTime[] = new int[noProcesses];
         int waitingTime[] = new int[noProcesses];
         int flag[] = new int[noProcesses];
-        int kBurstTime[] = new int[noProcesses];
+        int originalBurstTime[] = new int[noProcesses];
 
-        int i, st=0, tot=0;
+        int ganttInitialTime[] = new int[noProcesses];
+        int ganttEndTime[] = new int[noProcesses];
+
+        int i, ganttPointer=0, tot=0;
         float avgwt=0, avgta=0;
 
         for (i=0;i<noProcesses;i++)
@@ -25,7 +28,7 @@ class Sjf {
             String pid = "P" + (i+1);
             burstTime[i]= hashMap.get(pid).get(0);
             arrivalTime[i]= hashMap.get(pid).get(1);
-            kBurstTime[i]= burstTime[i];
+            originalBurstTime[i]= burstTime[i];
             flag[i]= 0;
         }
 
@@ -36,7 +39,7 @@ class Sjf {
 
             for ( i=0;i<noProcesses;i++)
             {
-                if ((arrivalTime[i]<=st) && (flag[i]==0) && (burstTime[i]<min))
+                if ((arrivalTime[i]<=ganttPointer) && (flag[i]==0) && (burstTime[i]<min))
                 {
                     min=burstTime[i];
                     c=i;
@@ -44,14 +47,16 @@ class Sjf {
             }
 
             if (c==noProcesses)
-                st++;
+                ganttPointer++;
             else
             {
+                if (originalBurstTime[c] == burstTime[c])
+                    ganttInitialTime[c] = ganttPointer;
                 burstTime[c]--;
-                st++;
+                ganttPointer++;
                 if (burstTime[c]==0)
                 {
-                    responseTime[c]= st;
+                    ganttEndTime[c]= ganttPointer;
                     flag[c]=1;
                     tot++;
                 }
@@ -60,15 +65,16 @@ class Sjf {
 
         for(i=0;i<noProcesses;i++)
         {
-            deliveryTime[i] = responseTime[i] - arrivalTime[i];
-            waitingTime[i] = deliveryTime[i] - kBurstTime[i];
+            deliveryTime[i] = ganttEndTime[i] - arrivalTime[i];
+            waitingTime[i] = deliveryTime[i] - originalBurstTime[i];
+            returnTime[i] = ganttInitialTime[i] - arrivalTime[i];
             avgwt+= waitingTime[i];
             avgta+= deliveryTime[i];
         }
 
         for(i=0;i<noProcesses;i++)
         {
-            resultTxtArea.append("P" + processes[i] + "\t" + deliveryTime[i] + "\t" + responseTime[i] + "\t" + waitingTime[i] + "\n");
+            resultTxtArea.append("P" + processes[i] + "\t" + deliveryTime[i] + "\t" + returnTime[i] + "\t" + waitingTime[i] + "\n");
         }
 
         resultTxtArea.append("\nPromedio de espera es: " + avgwt/noProcesses);
