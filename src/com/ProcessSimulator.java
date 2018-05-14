@@ -214,8 +214,6 @@ public class ProcessSimulator {
 					new PlaceHolder(txtBurstTime, "Ráfaga:");
 					new PlaceHolder(txtQuantum, "Quantum:");
 					new PlaceHolder(txtArrivalTime, "Tiempo de llegada:");
-//					hmProcess.forEach((k, v) ->
-//					txtArea.append("   " + k + "\t   " + v.get(0) + "\t   " + v.get(1) + "\n")
 //					);
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(null, "Verifica que los datos del proceso a agregar esten completos");

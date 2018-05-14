@@ -10,8 +10,8 @@ class Sjf {
         int processes[] = new int[noProcesses];
         int burstTime[] = new int[noProcesses];
         int arrivalTime[] = new int[noProcesses];
-        int deliveryTime[] = new int[noProcesses];
         int responseTime[] = new int[noProcesses];
+        int deliveryTime[] = new int[noProcesses];
         int waitingTime[] = new int[noProcesses];
         int flag[] = new int[noProcesses];
         int kBurstTime[] = new int[noProcesses];
@@ -51,7 +51,7 @@ class Sjf {
                 st++;
                 if (burstTime[c]==0)
                 {
-                    deliveryTime[c]= st;
+                    responseTime[c]= st;
                     flag[c]=1;
                     tot++;
                 }
@@ -60,10 +60,10 @@ class Sjf {
 
         for(i=0;i<noProcesses;i++)
         {
-            responseTime[i] = deliveryTime[i] - arrivalTime[i];
-            waitingTime[i] = responseTime[i] - kBurstTime[i];
+            deliveryTime[i] = responseTime[i] - arrivalTime[i];
+            waitingTime[i] = deliveryTime[i] - kBurstTime[i];
             avgwt+= waitingTime[i];
-            avgta+= responseTime[i];
+            avgta+= deliveryTime[i];
         }
 
         for(i=0;i<noProcesses;i++)
