@@ -49,6 +49,8 @@ public class ProcessSimulator {
 		JTextArea txtResponse = new JTextArea("", 10, 30);
 		rightPanel.setLayout(new GridBagLayout());
 
+		// TODO-CM: Add lowePanel (gantt diagram)
+
 		GridBagConstraints constraints = new GridBagConstraints();
 
 		// CM: leftPanel
