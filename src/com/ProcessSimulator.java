@@ -50,6 +50,9 @@ public class ProcessSimulator {
 		rightPanel.setLayout(new GridBagLayout());
 
 		// TODO-CM: Add lowePanel (gantt diagram)
+		JPanel lowerPanel = new JPanel();
+		JTextArea txtGantt = new JTextArea("", 10, 30);
+		txtGantt.setFont(txtGantt.getFont().deriveFont(20f));
 
 		GridBagConstraints constraints = new GridBagConstraints();
 
@@ -154,6 +157,15 @@ public class ProcessSimulator {
 		txtResponse.append("-----------------------------------------------------------------------------\n");
 		// CM: End of rightPanel
 
+		// CM: Lower Panel
+		constraints.gridy = 0;
+		constraints.gridx = 0;
+		constraints.gridwidth = 1;
+		constraints.gridheight = 1;
+		constraints.fill = GridBagConstraints.BOTH;
+		lowerPanel.add(new JScrollPane(txtGantt), constraints);
+		// CM: End of Lower Panel
+
 		// CM: JFrame
         constraints.gridy = 0;
         constraints.gridx = 0;
@@ -165,18 +177,36 @@ public class ProcessSimulator {
         constraints.weighty = 0.0;
 
 		constraints.gridy = 0;
-		constraints.gridx = 2;
+		constraints.gridx = 1;
 		constraints.gridwidth = 1;
 		constraints.gridheight = 1;
 		constraints.fill = GridBagConstraints.HORIZONTAL;
 		constraints.weighty = 1.0;
 		frame.add(rightPanel, constraints);
 		constraints.weighty = 0.0;
+
+		constraints.gridy = 1;
+		constraints.gridx = 0;
+		constraints.gridwidth = 2;
+		constraints.gridheight = 1;
+		constraints.fill = GridBagConstraints.HORIZONTAL;
+		constraints.weighty = 1.0;
+		frame.add(new JLabel("Diagrama de Gantt", SwingConstants.CENTER), constraints);
+		constraints.weighty = 0.0;
+
+		constraints.gridy = 2;
+		constraints.gridx = 0;
+		constraints.gridwidth = 2;
+		constraints.gridheight = 1;
+		constraints.fill = GridBagConstraints.HORIZONTAL;
+		constraints.weighty = 1.0;
+		frame.add(lowerPanel, constraints);
+		constraints.weighty = 0.0;
 		// CM: End of JFrame
 
 		txtQuantum.setEnabled(false);
 		btnSetQuantum.setEnabled(false);
-		frame.setSize(1200, 200);
+		frame.setSize(1200, 480);
 		frame.setVisible(true);
 		txtArea.setVisible(true);
 
@@ -227,7 +257,7 @@ public class ProcessSimulator {
 		btnProcess.addActionListener((ActionEvent ev) -> {
 			if (hmProcess.size() > 0) {
 				// Process the selected algorithm
-				String result = new Sjf().process(hmProcess, txtResponse);
+				String result = new Sjf().process(hmProcess, txtResponse, txtGantt);
 			}
 			else
 				JOptionPane.showMessageDialog(null, "No hay datos para procesar");

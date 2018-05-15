@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 class Sjf {
-    String process(HashMap<String, ArrayList<Integer>> hashMap, JTextArea resultTxtArea){
+    String process(HashMap<String, ArrayList<Integer>> hashMap, JTextArea resultTxtArea, JTextArea ganttTxtArea){
         int noProcesses = hashMap.size();
         int processes[] = new int[noProcesses];
         int burstTime[] = new int[noProcesses];
@@ -21,6 +21,7 @@ class Sjf {
 
         int i, ganttPointer=0, tot=0;
         float avgwt=0, avgta=0;
+        int lastC = 0;
 
         for (i=0;i<noProcesses;i++)
         {
@@ -46,21 +47,30 @@ class Sjf {
                 }
             }
 
-            if (c==noProcesses)
+            if (c==noProcesses) {
                 ganttPointer++;
+                ganttTxtArea.append("|P" + (c+1));
+            }
             else
             {
-                if (originalBurstTime[c] == burstTime[c])
+                if (originalBurstTime[c] == burstTime[c]) {
                     ganttInitialTime[c] = ganttPointer;
+                    ganttTxtArea.append("|P" + (c+1));
+                }
+                if (lastC != c)
+                    ganttTxtArea.append("P" + (c+1));
+                ganttTxtArea.append("-");
                 burstTime[c]--;
                 ganttPointer++;
                 if (burstTime[c]==0)
                 {
+                    ganttTxtArea.append("|");
                     ganttEndTime[c]= ganttPointer;
                     flag[c]=1;
                     tot++;
                 }
             }
+            lastC = c;
         }
 
         for(i=0;i<noProcesses;i++)
