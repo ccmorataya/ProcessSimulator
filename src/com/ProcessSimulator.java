@@ -51,8 +51,9 @@ public class ProcessSimulator {
 
 		// TODO-CM: Add lowePanel (gantt diagram)
 		JPanel lowerPanel = new JPanel();
-		JTextArea txtGantt = new JTextArea("", 10, 30);
+		JTextArea txtGantt = new JTextArea("", 10, 50);
 		txtGantt.setFont(txtGantt.getFont().deriveFont(20f));
+		txtGantt.setText("\n\n\n\t\t");
 
 		GridBagConstraints constraints = new GridBagConstraints();
 
